@@ -66,6 +66,16 @@ impl Contract {
         }
     }
 
+    #[payable]
+    #[handle_result]
+    pub fn insert_account(&mut self, acc_id: AccountId, amount: U128) -> Result<(), &'static str> {
+        if amount.0 == 0 {
+            return Err("Empty amount");
+        }
+        self.accounts.insert(acc_id, Account { balance: amount.0 });
+        Ok(())
+    }
+
     pub(crate) fn opn_address(&self) -> AccountId {
         self.opn_contract.as_ref().unwrap().clone()
     }
@@ -85,6 +95,7 @@ impl Contract {
             "Can only be called by the owner"
         );
     }
+
     pub fn set_settings(&mut self, by_half: bool) {
         self.by_half = by_half;
     }

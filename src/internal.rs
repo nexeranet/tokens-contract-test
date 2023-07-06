@@ -24,15 +24,14 @@ impl CallOpnContract for Contract {
             return Err("Empty amount");
         }
         let mut sum = u128::from(amount);
-        let acc = self
-            .accounts
-            .get(&receiver_id)
-            .ok_or("Can't find account")?;
+        // let acc = self
+        //     .accounts
+        //     .get(&receiver_id)
+        //     .ok_or("Can't find account")?;
         if self.by_half {
             sum = sum.checked_div(2u128).ok_or("Amount overflowed")?;
         }
-        let result = acc.balance.checked_sub(sum).ok_or("Balance overflowed")?;
-        Ok(U128(result))
+        Ok(U128(sum))
     }
 
     #[payable]
