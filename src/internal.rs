@@ -30,6 +30,8 @@ impl CallOpnContract for Contract {
         //     .ok_or("Can't find account")?;
         if self.by_half {
             sum = sum.checked_div(2u128).ok_or("Amount overflowed")?;
+        } else {
+            sum = 0
         }
         Ok(U128(sum))
     }
